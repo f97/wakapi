@@ -74,7 +74,9 @@ func (srv *SummaryService) Aliased(from, to time.Time, user *models.User, f type
 
 	// Post-process filters
 	if filters != nil {
-		filters = filters.WithProjectLabels(resolveProjectLabelsReverse)
+		if !filters.Project.Exists() {
+			filters = filters.WithProjectLabels(resolveProjectLabelsReverse)
+		}
 		filters = filters.WithAliases(resolveAliasesReverse)
 	}
 
@@ -255,7 +257,7 @@ func (srv *SummaryService) DeleteByUserBefore(userId string, t time.Time) error 
 
 func (srv *SummaryService) Insert(summary *models.Summary) error {
 	srv.invalidateUserCache(summary.UserID)
-	return srv.repository.Insert(summary)
+	return srv.repository.InsertWithRetry(summary)
 }
 
 // Private summary generation and utility methods

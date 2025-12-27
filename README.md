@@ -188,7 +188,8 @@ You can specify configuration options either via a config file (default: `config
 | `security.password_salt` /<br> `WAKAPI_PASSWORD_SALT`                                       | -                                                | Pepper to use for password hashing                                                                                                                                              |
 | `security.insecure_cookies` /<br> `WAKAPI_INSECURE_COOKIES`                                 | `true`                                           | Whether or not to allow cookies over HTTP. For production, it is **highly recommended** to serve Wakapi via HTTPS and set this to `false`.                                      |
 | `security.cookie_max_age` /<br> `WAKAPI_COOKIE_MAX_AGE`                                     | `172800`                                         | Lifetime of authentication cookies in seconds or `0` to use [Session](https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies#Define_the_lifetime_of_a_cookie) cookies        |
-| `security.allow_signup` /<br> `WAKAPI_ALLOW_SIGNUP`                                         | `true`                                           | Whether to enable user registration                                                                                                                                             |
+| `security.allow_signup` /<br> `WAKAPI_ALLOW_SIGNUP`                                         | `true`                                           | Whether to enable local user registration                                                                                                                                       |
+| `security.oidc_allow_signup` /<br> `WAKAPI_OIDC_ALLOW_SIGNUP`                               | `true`                                           | Whether to enable user registration via OIDC                                                                                                                                    |
 | `security.signup_captcha` /<br> `WAKAPI_SIGNUP_CAPTCHA`                                     | `false`                                          | Whether the registration form requires solving a CAPTCHA                                                                                                                        |
 | `security.invite_codes` /<br> `WAKAPI_INVITE_CODES`                                         | `true`                                           | Whether to enable registration by invite codes. Primarily useful if registration is disabled (invite-only server).                                                              |
 | `security.disable_frontpage` /<br> `WAKAPI_DISABLE_FRONTPAGE`                               | `false`                                          | Whether to disable landing page (useful for personal instances)                                                                                                                 |
@@ -575,9 +576,12 @@ Coding in open source is my passion, and I would love to do it on a full-time ba
 
 I highly appreciate the efforts of **[@alanhamlett](https://github.com/alanhamlett)** and the WakaTime team and am thankful for their software being open source.
 
-Moreover, thanks to **[server.camp](https://server.camp)** for sponsoring server infrastructure for Wakapi.dev.
+Moreover, thanks to **[server.camp](https://server.camp)** for donating server infrastructure for Wakapi.dev and [Tuta](https://tuta.com) to support us with their open-source sponsorship program.
 
-<img src=".github/assets/servercamp_logo.png" width="220px" />
+<div>
+  <img src=".github/assets/servercamp_logo.png" width="200px" />
+  <img src=".github/assets/tuta_logo.svg" width="200px"/>
+</div>
 
 ## 📓 License
 

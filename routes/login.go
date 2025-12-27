@@ -106,9 +106,12 @@ func (h *LoginHandler) PostLogin(w http.ResponseWriter, r *http.Request) {
 
 	user, err := h.userSrvc.GetUserById(login.Username)
 	if err != nil {
-		w.WriteHeader(http.StatusNotFound)
-		templates[conf.LoginTemplate].Execute(w, h.buildViewModel(r, w, false).WithError("resource not found"))
-		return
+		// try to get by email if given username is an email address (checked inside service)
+		if user, err = h.userSrvc.GetUserByEmail(login.Username); err != nil {
+			w.WriteHeader(http.StatusNotFound)
+			templates[conf.LoginTemplate].Execute(w, h.buildViewModel(r, w, false).WithError("resource not found"))
+			return
+		}
 	}
 
 	if !utils.ComparePassword(user.Password, login.Password, h.config.Security.PasswordSalt) {
@@ -428,7 +431,7 @@ func (h *LoginHandler) GetOidcCallback(w http.ResponseWriter, r *http.Request) {
 	user, err := h.userSrvc.GetUserByOidc(provider.Name, idTokenPayload.Subject)
 	if err != nil {
 		// create new user account
-		if !h.config.IsDev() && !h.config.Security.AllowSignup {
+		if !h.config.IsDev() && !h.config.Security.OidcAllowSignup {
 			routeutils.SetError(r, w, "registration is disabled on this server")
 			http.Redirect(w, r, fmt.Sprintf("%s/login", h.config.Server.BasePath), http.StatusFound)
 			return
